@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>역곡습지 협의과정 아카이브</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 차분한 공공 기록. 사실과 날짜가 주인공, 꾸밈은 최소.
+   IDEA: 습지 옆에 놓인 현장 기록장 — 날짜가 물길을 따라 흘러간다.
+   PICTURE: 첫 화면은 실제 역곡습지 사진과 시민설계안의 세 구역.
+   COLOUR and TYPE: 갈대숲 짙은 초록, 물길 파랑, 부들 갈색 포인트 / Gowun Batang 제목 + Noto Sans KR 본문.
+   LAYOUT: 머리 띠 → 구역 → 타임라인(필터·검색) → 시민설계안 → 데이터 표 → 출처. */
+:root{color-scheme:light dark;
+ --bg:light-dark(#fbfaf6,#111712);--paper:light-dark(#ffffff,#18211a);--ink:light-dark(#18211b,#e7ece6);
+ --mute:light-dark(#5b6a5f,#a3b2a6);--line:light-dark(#dfe5dc,#2c3a2f);
+ --reed:light-dark(#1f3d2b,#16301f);--water:light-dark(#2b6d8c,#6fb3d2);--cat:light-dark(#8a5a2b,#d6a26b);
+ --chip:light-dark(#eef2ec,#223026)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Sans KR",system-ui,sans-serif;overflow-x:clip;word-break:keep-all}
+h1,h2,h3{font-family:"Gowun Batang",serif;line-height:1.2;text-wrap:balance;margin:0}
+a{color:var(--water)}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(32px,5vw,72px) max(5vw,16px)}
+html{scroll-padding-top:64px}
+/* hero */
+.hero{background:var(--reed);color:#eef3ec;padding-bottom:0}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,4vw,56px);align-items:end}
+.hero h1{font-size:clamp(32px,5vw,50px);margin:10px 0 18px}
+.kicker{font-size:15px;color:#bcd0bf}
+.lead{font-size:17px;max-width:34em;color:#dfe9df}
+.result{margin:22px 0 0;padding:16px 18px;background:rgba(255,255,255,.07);border-radius:10px;font-size:16px}
+.result b{display:block;font-size:14px;color:#e4c08f;font-weight:500;margin-bottom:4px}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin:24px 0 clamp(28px,4vw,56px)}
+.stats div{font-size:14px;color:#bcd0bf}.stats strong{display:block;font:700 30px/1.1 "Gowun Batang",serif;color:#fff}
+.heroimg{margin:0;border-radius:14px 14px 0 0;overflow:hidden;aspect-ratio:4/3;background:#0e2216}
+.heroimg img{width:100%;height:100%;object-fit:cover;display:block}
+.heroimg figcaption{font-size:13px;color:#bcd0bf;padding:8px 2px}
+/* nav */
+nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px max(5vw,16px)}
+nav.toc a{flex:none;padding:8px 12px;border-radius:99px;text-decoration:none;color:var(--ink);font-size:15px}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--chip)}
+h2{font-size:clamp(26px,3.4vw,36px);margin-bottom:10px}
+.sub{color:var(--mute);margin:0 0 24px;max-width:46em}
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
+.chip{font:inherit;font-size:15px;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--reed);color:#fff;border-color:var(--reed)}
+:root[data-theme=dark] .chip[aria-pressed=true]{background:#3c6b4c}
+input[type=search]{font:inherit;font-size:16px;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);flex:1 1 220px}
+:focus-visible{outline:3px solid var(--water);outline-offset:2px}
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:9.5em;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--water),color-mix(in srgb,var(--water) 40%,transparent));border-radius:3px}
+.ev{display:grid;grid-template-columns:8.6em minmax(0,1fr);gap:0 2.4em;padding:0 0 34px;position:relative}
+.ev::before{content:"";position:absolute;left:calc(9.5em - 5px);top:7px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:3px solid var(--water)}
+.ev.key::before{background:var(--cat);border-color:var(--cat)}
+.when{text-align:right;font-weight:700;font-size:15px;color:var(--ink);white-space:normal;padding-top:1px}
+.when small{display:block;font-weight:400;color:var(--mute);font-size:13px}
+.ev h3{font-size:21px;margin-bottom:6px}
+.tag{display:inline-block;font-size:13px;color:var(--mute);background:var(--chip);border-radius:6px;padding:1px 8px;margin-bottom:8px}
+.tag.k{color:var(--cat);background:color-mix(in srgb,var(--cat) 14%,transparent)}
+.ev ul{margin:4px 0 0;padding-left:1.1em;max-width:44em}
+.ev li{margin:3px 0}
+.strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:12px;padding-bottom:6px}
+.strip button{flex:none;scroll-snap-align:start;border:0;padding:0;background:none;cursor:zoom-in;border-radius:8px;overflow:hidden}
+.strip img{display:block;height:150px;width:auto;max-width:260px;object-fit:cover;background:var(--chip)}
+.empty{color:var(--mute);padding:20px 0}
+/* zones */
+.zones{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.zones figure{margin:0}.zones img{width:100%;border-radius:12px;display:block;cursor:zoom-in}
+.zones figcaption{font-size:13px;color:var(--mute);margin-top:6px}
+.zone{padding:16px 0;border-top:1px solid var(--line)}
+.zone h3{font-size:22px}.zone h3 span{font:500 14px "Noto Sans KR";color:var(--mute);margin-left:6px}
+.zone p{margin:6px 0 0}
+.z1 h3{color:#c0392b}.z2 h3{color:var(--cat)}.z3 h3{color:var(--water)}
+/* tables */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--mute);font-size:14px;background:var(--chip);position:sticky;top:0}
+td.c{text-align:center;white-space:nowrap}
+.dot{color:var(--reed)}:root[data-theme=dark] .dot{color:#8fc79e}
+.note{font-size:13px;color:var(--cat)}
+.vegwrap{max-height:560px;overflow:auto}
+.scroll{overflow-x:auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 14px;font-size:14px;color:var(--mute)}
+.counts b{color:var(--ink);font-size:18px}
+.mono{font-variant-numeric:tabular-nums;white-space:nowrap}
+/* data */
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.dl .card{padding:16px}
+.dl h3{font:700 17px "Noto Sans KR"}
+.dl p{margin:4px 0 12px;font-size:14px;color:var(--mute)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-size:15px;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--chip);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.src{background:var(--reed);color:#dfe9df}
+.src a{color:#a9d4ea}.src h2{color:#fff}
+.src .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:start}
+.src img{width:220px;background:#fff;border-radius:8px;padding:8px}
+.guide details{border-top:1px solid var(--line);padding:6px 0}.guide summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.guide ul{margin:0 0 8px;padding-left:1.2em}
+#lt details{background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+#lt summary{cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:4px 14px;min-height:44px}
+#lt summary b{font-weight:700}#lt summary span{color:var(--mute);font-size:14px;grid-column:2}
+#lt .lb{padding:0 16px 16px calc(7.5em + 30px);max-width:60em}#lt .lb p{margin:6px 0}
+.lib-h{font-size:22px;margin:30px 0 4px}.note2{color:var(--mute);font-size:14px;margin:0 0 10px}
+.strip.big img{height:220px;max-width:none}
+.libgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:30px}
+.libgrid .card{padding:16px}.libgrid h4{margin:0 0 2px;font-size:17px}.libgrid .m{font-size:13px;color:var(--mute);margin-bottom:8px}.libgrid p{margin:0;font-size:15px}
+.libgrid .st{display:inline-block;margin-top:10px;font-size:13px;border-radius:6px;padding:1px 8px;background:var(--chip);color:var(--mute)}
+.src-line{font-size:13px;color:var(--mute);margin-top:6px}
+@media(max-width:600px){#lt summary{grid-template-columns:minmax(0,1fr)}#lt summary span{grid-column:1}#lt .lb{padding:0 16px 16px}.strip.big img{height:160px}}
+/* lightbox */
+#lb{position:fixed;inset:0;background:rgba(8,14,10,.92);display:none;z-index:20;padding:16px;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:calc(100vh - 120px);border-radius:6px}
+#lb p{color:#dfe9df;margin:0;font-size:14px;text-align:center;max-width:60em}
+#lb .bar{display:flex;gap:8px}
+#lb .btn{background:#253a2b;color:#fff;border-color:#3d5a45}
+@media(max-width:820px){.hero .wrap,.zones,.src .wrap{grid-template-columns:minmax(0,1fr)}.src img{width:180px}}
+@media(max-width:600px){
+ .tl::before{left:6px}.ev{grid-template-columns:minmax(0,1fr);padding-left:28px}.ev::before{left:1px}
+ .when{text-align:left;margin-bottom:4px}.ev h3{font-size:19px}.strip img{height:120px}
+ table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:6.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:6em;margin-inline-start:-6.5em;color:var(--mute)}.stack td:empty{display:none}}
+@media(prefers-reduced-motion:no-preference){.ev{animation:in .4s ease both}@keyframes in{from{opacity:0;transform:translateY(6px)}}}
+</style>
+</head>
+<body>
+<header class="band hero">
+ <div class="wrap">
+  <div>
+   <div class="kicker">부천시지속가능발전협의회 · 공공 기록 아카이브</div>
+   <h1>역곡습지 보전을 위한<br>민·관 협의과정 기록</h1>
+   <p class="lead">부천 역곡공공주택지구 개발 과정에서 시민이 발견한 맹꽁이 서식 습지를 생태공원(생추어리)으로 지키기 위해, 2024년 첫 모니터링부터 2026년 11월까지 시민사회·부천시·LH·시공사가 나눈 협의와 활동을 날짜순으로 정리했습니다.</p>
+   <div class="result"><b>지금까지의 핵심 결과</b>LH 공문 회신(2025. 12. 2.): “시민단체가 주장하는 습지 구간 제외하고 공원 저지대 구간 성토, 부천시 도시개발과와 공원 조성계획에 대해 지속 협의”</div>
+   <div class="stats" id="stats"></div>
+  </div>
+  <figure class="heroimg"><img src="img/image89.jpg" alt="여름 저녁의 역곡습지와 모니터링 중인 시민들"><figcaption>2026. 7. 29. 전문가 모니터링 중의 역곡습지</figcaption></figure>
+ </div>
+</header>
+<nav class="toc" aria-label="목차"><div class="wrap">
+ <a href="#timeline">협의 타임라인</a><a href="#design">시민설계안</a><a href="#letters">공문 원문</a><a href="#library">자료실</a><a href="#vegetation">식생조사</a><a href="#complaints">민원</a><a href="#press">언론보도</a><a href="#data">데이터 내려받기</a><a href="#source">출처·이용안내</a>
+</div></nav>
+
+<main>
+<section class="band" id="timeline"><div class="wrap">
+ <h2>협의 타임라인</h2>
+ <p class="sub">간담회, 공문, 현장 모니터링, 시민 행사를 한 줄로 이었습니다. 갈색 점은 협의 방향이 바뀐 주요 기록입니다. 사진을 누르면 크게 볼 수 있습니다.</p>
+ <div class="controls" id="cats"></div>
+ <div class="controls"><input type="search" id="q" placeholder="검색 (예: 맹꽁이, 모감주나무, 펜스)" aria-label="타임라인 검색"><button class="chip" id="keyonly" aria-pressed="false">주요 기록만</button></div>
+ <ol class="tl" id="tl"><li class="empty">기록을 불러오는 중…</li></ol>
+</div></section>
+
+<section class="band" id="design" style="background:var(--paper);border-block:1px solid var(--line)"><div class="wrap">
+ <h2>시민설계안: 세 개의 구역</h2>
+ <p class="sub">2026년 8월 29일 시민설계워크숍(33명 참여)과 9월 7일 종합 회의를 거쳐 정리해, 9월 17일 부천시와 LH에 공문으로 제안한 역곡습지 생태공원 설계안입니다.</p>
+ <div class="zones">
+  <figure><img src="img/image102.jpg" alt="역곡습지 생태공원 시민설계안 지도: 핵심구역, 완충구역, 이용구역" data-cap="역곡습지 생태공원 시민설계안 (2026. 8. 29. 워크숍)"><figcaption>시민설계 워크숍 결과 지도 (참여: 부천시민 33명)</figcaption></figure>
+  <div>
+   <div class="zone z1"><h3>핵심구역<span>Core Eco-Zone · 습지 원형 보존</span></h3><p>산울림청소년센터 앞마당 전면의 자연 형성 습지 공간입니다. 사람의 출입을 차단하는 보호 울타리를 두르고 원형 식생을 그대로 보존해 생태적 안식처 역할을 하도록 고안했습니다.</p></div>
+   <div class="zone z2"><h3>완충구역<span>Buffer Zone · 관찰과 간접 체험</span></h3><p>핵심구역과 맞닿은 완충 공간입니다. 무장애 데크길(둘레길), 관망 데크, 소규모 교육전시공간, 체험 공간, 야외전시 갤러리, 모감주나무길 추가 식재, 안내판과 곤충 호텔로 시민의 자연 관찰을 돕습니다.</p></div>
+   <div class="zone z3"><h3>이용구역<span>Active/Transition Zone · 시민과 아파트의 소통</span></h3><p>산울림청소년센터 건물 영역과 남서측 도로(역곡로) 부근입니다. 친환경 쉼터·놀이터·벤치를 이어 시민 여가 공간으로 씁니다.</p></div>
+  </div>
+ </div>
+ <div class="zones" style="margin-top:36px">
+  <figure><img src="img/map-final.jpg" alt="역곡습지 시민 지정 핵심보호구역, 완충구역, 이용구역 최종 제안 획정안 항공지도" data-cap="역곡습지 시민 지정 핵심보호구역·완충구역·이용구역 최종 제안 획정안 (도시숲시민모임)"><figcaption>시민 지정 핵심보호·완충·이용구역 최종 제안 획정안 (공문 붙임 3)</figcaption></figure>
+  <div>
+   <h3 style="font-size:22px;margin-bottom:8px">시민 의견 종합</h3>
+   <p style="margin:0 0 8px"><b>제안된 공원 이름</b><br>꽁이생태공원, 산울림생태공원 (그 밖에 역곡습지생태공원, 맹꽁이생태공원, 공공야생신탁공원, 울림 꽁이 생태공원, 야생생명커뮤니티공원, 야생센터공원, 맹글생태공원, 맹꽁공원, 습지공원)</p>
+   <p style="margin:0"><b>워크숍 개요</b><br>2026. 8. 29.(토) 15:30~18:00, 산울림청소년센터 1층 맥놀이판. 관내 청소년·환경활동가·시민 33명(25명 예정)이 7명씩 4개 모둠으로 설계. 생태 모니터링 결과 공유, 청소년 모니터링 발표, 역곡습지 식생과 생태공원 조성 방향 강의 후 모둠별 설계와 발표.</p>
+  </div>
+ </div>
+ <h3 style="font-size:24px;margin:36px 0 6px">설계 가이드라인</h3>
+ <p class="sub" style="margin-bottom:12px">워크숍 구상 스케치를 바탕으로 습지 보호와 시민 편의, 아파트 단지와의 경계를 함께 고려해 정리한 세부 제안입니다.</p>
+ <div class="guide">
+  <details open><summary>진입로·주차 시설 (원형 보전 최우선)</summary><ul><li>생태계 분절을 막기 위해 진입로는 기존 도로와 소하천 구조를 그대로 유지해 지형 분절과 물 흐름 교란을 막음</li><li>신규 포장으로 인한 서식지 훼손을 줄이기 위해 주차장과 화장실은 기존 주차장 부지 및 그 인근에 모아 배치</li></ul></details>
+  <details><summary>생태 보전과 안전망</summary><ul><li>양서류·야생생물 로드킬 예방을 위한 맹꽁이 보호 펜스를 견고하게 설치</li><li>인접 아파트 경계부에 보호펜스를 설치해 생활권과 생태계를 물리적으로 분리</li><li>습지 보호 울타리와 대상지 내 기존 우물 보호 조치</li><li>핵심구역(꽁이 절대 보호구역)은 맹꽁이 서식·산란 환경을 원형 그대로 유지하고 인위적 간섭을 전면 차단</li></ul></details>
+  <details><summary>관찰과 환경교육 시설</summary><ul><li>습지 주변 무장애 데크길(둘레길)로 사람 발길에 의한 훼손 방지</li><li>관망 데크와 산울림청소년센터 옥상(3층)을 활용한 습지 전망대</li><li>소규모 교육전시공간, 습지 교육실, 터널 체험관, 생태체험관</li><li>곤충 호텔, 맹꽁이 조형물, 야생화 초지, 모감주나무길 추가 식재</li><li>관찰장비 보관함, 관찰 망원경·장화 대여</li></ul></details>
+  <details><summary>시민 편의와 체험·여가</summary><ul><li>생태조형 야외 갤러리와 체험존, 산울림청소년센터 전면 완충지와 유기적으로 연결</li><li>시민 이용공간 내 무대, 쉼터, 습지 변두리의 지붕 있는 벤치</li><li>텃밭 체험과 맹꽁이 보전을 연계한 공원 자체 운영 밭 가꾸기</li><li>무에너지 캠핑·비박 공간, 자연 놀이터, 개울가 물레방아, 소규모 물웅덩이</li></ul></details>
+  <details><summary>향후 운영·관리</summary><ul><li>인근 산울림청소년센터에 공원 관리 협업과 운영권(공공 생태교육, 조망 안내소, 스탬프 투어, 관리 조례 제정 등)을 부여하는 연계 방안</li></ul></details>
+ </div>
+</div></section>
+
+<section class="band" id="letters"><div class="wrap">
+ <h2>공문 원문</h2>
+ <p class="sub">협의 과정에서 오간 공문 8건의 본문을 그대로 옮겼습니다. 결재란의 담당자 이름과 이메일 등 하단 정보는 뺐습니다.</p>
+ <div id="lt"></div>
+</div></section>
+
+<section class="band" id="library" style="background:var(--paper);border-block:1px solid var(--line)"><div class="wrap">
+ <h2>자료실</h2>
+ <p class="sub">협의 과정에서 만들어지거나 참고한 자료입니다. 원본을 그대로 공개하기 어려운 자료(강연자 저작물, 개인정보가 담긴 자료, 대용량 보고서)는 요약과 출처만 적었습니다.</p>
+ <h3 class="lib-h">발표자료: 부천 역곡습지, 시민의 기록과 미래를 위한 제안</h3>
+ <p class="note2">부천시지속가능발전협의회, 경기 생물다양성 보존 프로젝트 발표 (2026. 6. 25.) · 16장 · 개인 이름과 연락처는 흐리게 처리</p>
+ <div class="strip big" id="deck"></div>
+ <h3 class="lib-h">2003년 부천청소년수련관(현 산울림청소년센터) 환경·생태보존 보완대책(안)</h3>
+ <p class="note2">부천시 · 서울시립대 조경학과 「환경친화적인 부천시 청소년수련관 건설방안」(2003. 12.) 포함, 총 48쪽 중 3쪽</p>
+ <p style="max-width:46em">센터를 지을 때부터 이 일대가 습지였다는 기록입니다. 건축물을 양쪽 습지에서 20m 이상 떨어뜨려 생태를 보존하고, 지하층을 최소 규모로 하며 파일기초를 지양해 지하수를 교란하지 않고, 지하수 개발을 억제해 습지의 지하 수맥을 보존한다는 계획과, 논(답) 일대를 연못이 있는 생태습지로 보존하는 이용계획이 담겨 있습니다. 같은 자료에는 당시 수련관 예정지 주변에서 반딧불이가 발견되어 시민단체가 생태공원을 제안했다는 2003년 신문 보도와 ‘원미산 살리기’ 시민운동 자료도 함께 묶여 있습니다.</p>
+ <div class="strip big" id="h03"></div>
+ <div class="libgrid" id="libcards"></div>
+ <h3 class="lib-h">맹꽁이·금개구리 캐릭터</h3>
+ <p class="note2">시민설계 워크숍과 행사에 쓰인 캐릭터 등신대(100×120cm)와 맹꽁이 일러스트</p>
+ <div class="strip big" id="chars"></div>
+</div></section>
+
+<section class="band" id="vegetation"><div class="wrap">
+ <h2>역곡습지 식생조사 (2025~2026, 총 4회)</h2>
+ <p class="sub">전문가 초본 조사(참나무 군락·목본 포함) 결과입니다. ●는 해당 조사에서 확인된 종이며, 조사자가 남긴 메모는 그대로 옮겼습니다(** 표시는 원문 그대로). 원문 표의 종명 표기를 수정하지 않았습니다.</p>
+ <div class="counts" id="vegcounts"></div>
+ <div class="controls"><input type="search" id="vq" placeholder="종명 검색 (예: 부들, 맹꽁이, 모감주)" aria-label="식생 종명 검색"></div>
+ <div class="card vegwrap"><table id="veg"><thead><tr><th>종명</th><th class="c">2025. 7. 22.</th><th class="c">2025. 7. 30.</th><th class="c">2025. 8. 31.</th><th class="c">2026. 7. 29.</th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="band" id="complaints" style="padding-top:0"><div class="wrap">
+ <h2>관련 민원 (국민신문고)</h2>
+ <p class="sub">2024년 7월부터 제기된 역곡습지·맹꽁이 관련 민원 목록입니다. 다부처 민원은 처리기관을 함께 적었습니다.</p>
+ <div class="card"><table class="stack" id="cmp"><thead><tr><th>신청일</th><th>제목</th><th>처리기관</th><th>신청번호</th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="band" id="press" style="padding-top:0"><div class="wrap">
+ <h2>언론보도</h2>
+ <div class="card"><table class="stack" id="art"><thead><tr><th>매체</th><th>기사</th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="band" id="data" style="background:var(--paper);border-top:1px solid var(--line)"><div class="wrap">
+ <h2>데이터 내려받기</h2>
+ <p class="sub">이 페이지의 모든 기록을 기계가 읽을 수 있는 형식으로 공개합니다. CSV는 엑셀에서 바로 열립니다(UTF-8). 링크가 열리지 않으면 ‘복사’로 내용을 복사해 쓰세요.</p>
+ <div class="dl" id="dl"></div>
+ <p id="copymsg" class="sub" role="status" style="margin-top:12px"></p>
+</div></section>
+</main>
+
+<footer class="band src" id="source"><div class="wrap">
+ <div>
+  <h2>출처와 이용안내</h2>
+  <p>원자료: 부천시지속가능발전협의회, 「[부천시지속가능발전협의회] 역곡습지 관련 협의과정」(2026. 11. 9. 작성, 한글 문서)과 공문·발표자료·워크숍 자료 등 관련 자료. 협업: 도시숲시민모임, 산울림청소년센터, 생명다양성재단. 일부 연표는 도시숲시민모임 발표자료(2026. 6. 25.)를 따랐고, 해당 기록에 출처를 적었습니다.</p>
+  <p>이 아카이브는 원문 한글 문서의 본문·표·사진을 추출해 웹으로 옮긴 1차 공개본입니다. 공개에 앞서 개인정보를 보호하기 위해 <b>개인 이름은 성만 남기고 가렸고</b>(예: 이○○ 팀장), 개인 휴대전화·후원 계좌가 적힌 안내물, 서명이 담긴 공문, 메신저·민원 앱 화면 캡처, 워크숍 참석 명단, 어린이 얼굴이 가까이 나온 사진은 싣지 않았습니다. 기관명·직함·공식 공문 내용은 그대로 두었습니다.</p>
+  <p>이 기록은 유엔 지속가능발전목표(SDGs)의 4.7(지속가능발전교육), 11.7(누구나 이용할 수 있는 녹지와 공공공간), 15.5(서식지 훼손 방지와 멸종위기종 보호), 16.7(참여적 의사결정)과 맞닿아 있습니다. 한쪽의 주장을 대변하기보다, 사람과 맹꽁이를 비롯한 여러 생명이 함께 사는 방안을 시민·행정·사업시행자가 어떻게 찾아 왔는지 그 과정을 남기려는 기록입니다. 기록 대부분이 시민사회 쪽에서 작성된 자료라는 점을 함께 밝혀 둡니다. LH와 부천시의 입장은 해당 기관의 공문과 민원 답변을 출처로 달았고, 간담회 내용은 부천지속협이 작성한 회의 기록입니다.</p>
+  <p>날짜는 부천지속협 「역곡습지 관련 협의과정」(2026. 11. 9.) 원문을 기준으로 했고, 요일도 원문 표기를 따랐습니다. 내용 정정이나 사진 삭제 요청은 부천시지속가능발전협의회로 연락해 주세요.</p>
+ </div>
+ <img src="img/image91.jpg" alt="부천시지속가능발전협의회 로고">
+</div></footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="사진 크게 보기"><img alt=""><p></p><div class="bar"><button class="btn" id="lbp">이전</button><button class="btn" id="lbx">닫기</button><button class="btn" id="lbn">다음</button></div></div>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let TL=[],cat='전체',keyOnly=false,q='';
+const CATS=['전체','간담회·협의','공문·민원·답변','모니터링·현장활동','행사·교육·홍보','공사·현장 대응'];
+$('#cats').innerHTML=CATS.map(c=>`<button class="chip" data-c="${esc(c)}" aria-pressed="${c==='전체'}">${esc(c)}</button>`).join('');
+$('#cats').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;for(const x of $('#cats').children)x.setAttribute('aria-pressed',x===b);render()});
+$('#keyonly').addEventListener('click',e=>{keyOnly=!keyOnly;e.currentTarget.setAttribute('aria-pressed',keyOnly);render()});
+$('#q').addEventListener('input',e=>{q=e.target.value.trim();render()});
+function render(){
+ const list=TL.filter(t=>(cat==='전체'||t.category===cat)&&(!keyOnly||t.key)&&(!q||(t.title+' '+t.details.join(' ')+' '+t.date_label).includes(q)));
+ $('#tl').innerHTML=list.length?list.map(t=>{
+  const [d,...rest]=t.date_label.split(' / ');
+  return `<li class="ev${t.key?' key':''}" id="${esc(t.id)}"><div class="when">${esc(t.date_label)}</div><div>
+  <span class="tag${t.key?' k':''}">${esc(t.category)}${t.key?' · 주요 기록':''}</span>
+  <h3>${esc(t.title)}</h3>
+  ${t.details.length?`<ul>${t.details.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+  ${t.source?`<div class="src-line">출처: ${esc(t.source)}</div>`:''}
+  ${t.links.length?`<p>${t.links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join(' · ')}</p>`:''}
+  ${t.images.length?`<div class="strip">${t.images.map((im,i)=>`<button data-ev="${esc(t.id)}" data-i="${i}" aria-label="사진 크게 보기"><img loading="lazy" src="${esc(im.file)}" alt="${esc(im.caption||t.title)}"></button>`).join('')}</div>`:''}
+  </div></li>`}).join(''):'<li class="empty">조건에 맞는 기록이 없습니다.</li>';
+}
+// lightbox
+let set=[],idx=0;const lb=$('#lb');
+function show(){const it=set[idx];lb.querySelector('img').src=it.src;lb.querySelector('img').alt=it.cap;lb.querySelector('p').textContent=it.cap+(set.length>1?`  (${idx+1}/${set.length})`:'')}
+function open(s,i){set=s;idx=i;show();lb.classList.add('on');$('#lbx').focus()}
+function close(){lb.classList.remove('on')}
+$('#tl').addEventListener('click',e=>{const b=e.target.closest('.strip button');if(!b)return;const t=TL.find(x=>x.id===b.dataset.ev);open(t.images.map(im=>({src:im.file,cap:(im.caption?im.caption+' — ':'')+t.date_label+' '+t.title})),+b.dataset.i)});
+$('#design img').addEventListener('click',e=>open([{src:e.target.src,cap:e.target.dataset.cap}],0));
+$('#lbx').addEventListener('click',close);
+$('#lbp').addEventListener('click',()=>{idx=(idx-1+set.length)%set.length;show()});
+$('#lbn').addEventListener('click',()=>{idx=(idx+1)%set.length;show()});
+lb.addEventListener('click',e=>{if(e.target===lb)close()});
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')$('#lbp').click();if(e.key==='ArrowRight')$('#lbn').click()});
+// csv parse
+function parseCSV(t){t=t.replace(/^﻿/,'');const rows=[];let r=[],f='',qd=false;for(let i=0;i<t.length;i++){const c=t[i];if(qd){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else qd=false}else f+=c}else if(c==='"')qd=true;else if(c===','){r.push(f);f=''}else if(c==='\n'){r.push(f);rows.push(r);r=[];f=''}else if(c!=='\r')f+=c}if(f||r.length){r.push(f);rows.push(r)}return rows}
+const files={};
+async function get(p){if(!files[p]){const r=await fetch(p);files[p]=await r.text()}return files[p]}
+// veg
+let VEG=[];
+function vegRender(){const vq=$('#vq').value.trim();
+ const cell=v=>v===''?'':(v==='1'?'<span class="dot" aria-label="확인">●</span>':`<span class="note">${esc(v)}</span>`);
+ $('#veg tbody').innerHTML=VEG.filter(r=>!vq||r.join(' ').includes(vq)).map(r=>`<tr><td>${esc(r[0])}</td>${r.slice(1).map(v=>`<td class="c">${cell(v)}</td>`).join('')}</tr>`).join('')||'<tr><td colspan="5" class="empty">검색 결과가 없습니다.</td></tr>'}
+$('#vq').addEventListener('input',vegRender);
+(async()=>{
+ try{const j=JSON.parse(await get('data/timeline.json'));TL=j.timeline;render()}catch(e){$('#tl').innerHTML='<li class="empty">기록을 불러오지 못했습니다. 새로고침해 주세요.</li>'}
+ try{VEG=parseCSV(await get('data/vegetation.csv')).slice(1).filter(r=>r[0]);vegRender();
+  const n=new Set(VEG.map(r=>r[0])).size,per=[1,2,3,4].map(i=>VEG.filter(r=>r[i]).length);
+  $('#vegcounts').innerHTML=`<span>기록된 종명 <b>${n}</b></span>`+['2025. 7. 22.','2025. 7. 30.','2025. 8. 31.','2026. 7. 29.'].map((d,i)=>`<span>${d} <b>${per[i]}</b></span>`).join('');
+  const cm=parseCSV(await get('data/complaints.csv')).slice(1).filter(r=>r[0]);
+  $('#cmp tbody').innerHTML=cm.map(r=>`<tr><td class="mono">${esc(r[2])}</td><td>${esc(r[1])}</td><td>${esc(r[3].replace('; ',', '))}</td><td class="mono">${esc(r[0])}</td></tr>`).join('');
+  const ar=parseCSV(await get('data/articles.csv')).slice(1).filter(r=>r[0]);
+  $('#art tbody').innerHTML=ar.map(r=>`<tr><td>${esc(r[0])}</td><td><a href="${esc(r[2])}" target="_blank" rel="noopener">${esc(r[1])}</a></td></tr>`).join('');
+  $('#stats').innerHTML=[[TL.length,'건의 협의·활동 기록'],[cm.length,'건의 관련 민원'],[n,'종의 식생 기록'],[8,'건의 공문 원문']].map(([v,l])=>`<div><strong>${v}</strong>${l}</div>`).join('');
+ }catch(e){}
+})();
+
+// letters
+(async()=>{try{const L=JSON.parse(await get('data/letters.json'));
+ $('#lt').innerHTML=L.map(l=>`<details id="${esc(l.id)}"><summary><b class="mono">${esc(l.date.replaceAll('-','. '))}.</b><b>${esc(l.title)}</b><span>${esc(l.sender)} → ${esc(l.recipient)} · ${esc(l.doc_no)}</span></summary><div class="lb">${l.body.map(p=>`<p>${esc(p)}</p>`).join('')}</div></details>`).join('')}catch(e){$('#lt').textContent='공문을 불러오지 못했습니다.'}})();
+// library
+const gal=(el,items)=>{$(el).innerHTML=items.map((it,i)=>`<button data-i="${i}" aria-label="크게 보기"><img loading="lazy" src="${esc(it.src)}" alt="${esc(it.cap)}"></button>`).join('');$(el).addEventListener('click',e=>{const b=e.target.closest('button');if(b)open(items,+b.dataset.i)})};
+gal('#deck',Array.from({length:16},(_,i)=>({src:`img/d25-${String(i+1).padStart(2,'0')}.jpg`,cap:`부천지속협 발표자료 ‘부천 역곡습지: 시민의 기록, 미래를 위한 제안’ ${i+1}/16`+(i===3?' (슬라이드의 ‘2024년 7월 18일경’은 2025년 7월 18일의 오기)':'')})));
+gal('#h03',[['02','청소년수련관 환경·생태 보존 보완대책(안) — 배치도 당초/변경(안)'],['03','건축물배치 조정과 생태습지 보존방안'],['07','사업 개요와 부지현황 (습지 표시)']].map(([n,c])=>({src:`img/h03-${n}.jpg`,cap:'2003 '+c})));
+gal('#chars',[{src:'img/char-1.jpg',cap:'금개구리와 핸썸이, 맹꽁이와 울림이 캐릭터 등신대'},{src:'img/char-2.jpg',cap:'맹꽁이 일러스트'}]);
+const LIB=[
+ ['역곡습지 보존을 위한 열린 토론회 자료집','부천지속협 자료 2025-22 · 2025. 11. 14. · 37쪽','발제 2편과 토론문 3편. 도시숲시민모임 제안서는 역곡습지를 원미산과 와룡산 자락이 만나는 곳에 자연적으로 생긴 습지로 소개하고, 전문가 4명 검토 결과 경기도 법정 보호종 맹꽁이 등이 사는 안정적 토종 생태계라고 밝힙니다. 복토하지 않고 현 상태를 유지하는 ‘국내 1호 공공야생신탁공원(생추어리)’, 습지 보존구역 지정, 최소한의 관찰시설, 산울림청소년센터와 연계한 생태교육을 제안했습니다.','요약 공개 (원문에 개인 이름 다수)'],
+ ['발제: 역곡습지를 도심 속 야생 생추어리로','생명다양성재단 성○○ 연구원 · 2025. 11. 14.','생추어리(안식처) 개념을 야생 서식지로 넓혀 제안. 부천이 경기도에서 녹지율이 가장 낮은 도시라는 점, 대체서식지 이주가 국내외에서 대부분 실패했다는 연구(국내 대체서식지 약 90% 실패 평가 인용)를 들어 원서식지 보전(in-situ)만이 답이라고 주장합니다.','요약 공개 (강연자 저작물)'],
+ ['강의: 리와일딩, 야생의 귀환의 새시대','생명다양성재단 김○○ 대표 · 2026. 4. 4. 특강','인간과 야생의 갈등(HWC), 야생동물을 ‘유해’로 지정해 온 국내 사례, 런던 여우·뭄바이 표범 등 공존 사례를 소개하고, 핵심 서식지·생태통로·포식자(3C)를 축으로 생태계 기능을 회복하는 리와일딩 개념을 설명합니다.','요약 공개 (강연자 저작물)'],
+ ['강의: 사람과 두꺼비가 함께 살아요','(사)두꺼비친구들 신○○ 사무처장 · 2026. 5. 30. 특강','청주 원흥이방죽 두꺼비 살리기 운동(2003~)이 생태공원 조성과 두꺼비생태마을, 주민 마을신문으로 이어진 과정과 수상 이력, 이후 구룡산 살리기 운동을 소개합니다. 역곡습지가 따를 수 있는 시민 주도 생태공원 선례로 인용됩니다.','요약 공개 (강연자 저작물)'],
+ ['발표: 역곡습지, 시민이 발견한 기적','도시숲시민모임 · 2026. 6. 25. · 16장','부천의 마지막 자연습지를 지켜낸 약 1년의 기록. 2025. 7. 18. 맹꽁이 폐사 발견, 10월 3자 간담회 결렬, 11월 토론회와 1인 시위, 12. 2. LH 성토 제외 공문, 2026년 모감주나무 벌목과 민·관 정례 간담회까지의 연표를 담았습니다. 연표 항목은 위 타임라인에 반영했습니다.','타임라인에 반영'],
+ ['역곡생태공원 시민설계워크숍 개요·설계안·가이드라인·지도','도시숲시민모임 공문 붙임 1~3 · 2026. 9. 16.','워크숍 목표와 일정, 공간 구획(핵심·완충·이용구역), 분야별 시설 제안, 시민 제안 공원 이름. 위 ‘시민설계안’ 섹션에 정리했습니다. 워크숍 일정표의 진행자 이름은 싣지 않았습니다.','내용 공개'],
+ ['국민신문고 민원과 답변 화면','2025. 12. 22. ~ 2026. 1. 23. · 캡처 7장','모감주나무 군락 보존과 하천 활용 설계 변경 제안에 대한 LH 인천지역본부(12. 30., 1. 20.)와 공원조성과(12. 31., 1. 23.) 답변. 내용은 타임라인에 요약했습니다.','요약 공개 (개인 계정 화면)'],
+ ['시민설계 워크숍 참석 명단','2026. 8. 29. · 33명','참석자 개인정보가 담겨 있어 공개하지 않습니다. 참석 인원(33명)만 기록합니다.','비공개 (개인정보)'],
+ ['부천시 도시생태현황지도 작성 용역 최종보고서','부천시 · ㈜동북아생물다양성연구소 · 2021. 12. · 197쪽','부천시 전역의 생태현황 조사. 양서류 조사에서 멸종위기 야생생물 Ⅱ급 맹꽁이가 기록되어 있고, 오쇠동 습지 보전 사례와 하천별 어류 조사(역곡천 포함)가 실려 있습니다.','참고자료 (원문은 부천시)'],
+ ['대체서식지 조성 및 관리 개선방안 마련 최종보고서','환경부 · 국립생태원 · 2025. 2. · 182쪽','국내 대체서식지 조성·관리 실태와 개선방안. 2026. 9. 10. 도시숲시민모임의 ‘맹꽁이 포획 및 이주 중단’ 요청 공문이 근거로 인용한 자료입니다.','참고자료 (원문은 국립생태원)'],
+ ['한국형 자연공존지역(OECM) 매뉴얼','환경부 · 국립공원공단 · 30쪽','보호지역이 아니어도 생물다양성 보전 효과가 있는 지역을 ‘자연공존지역(OECM)’으로 발굴·인정하는 기준과 절차. 시민이 지켜 온 역곡습지를 제도적으로 인정받는 방안의 참고자료입니다.','참고자료 (원문은 환경부)'],
+];
+$('#libcards').innerHTML=LIB.map(([t,m,d,st])=>`<div class="card"><h4>${esc(t)}</h4><div class="m">${esc(m)}</div><p>${esc(d)}</p><span class="st">${esc(st)}</span></div>`).join('');
+
+const DL=[['timeline.json','협의 타임라인 (JSON)','날짜·분류·제목·세부내용·사진 경로'],['timeline.csv','협의 타임라인 (CSV)','기록 1건당 1행'],['vegetation.csv','식생조사 (CSV)','종명 × 조사일 4회'],['vegetation.json','식생조사 (JSON)','조사일 목록과 행 배열'],['complaints.csv','관련 민원 목록 (CSV)','신청번호·제목·신청일·처리기관'],['articles.csv','언론보도 목록 (CSV)','매체·제목·URL'],['letters.json','공문 원문 (JSON)','공문 8건의 날짜·발신·수신·문서번호·본문'],['letters.csv','공문 원문 (CSV)','공문 1건당 1행']];
+$('#dl').innerHTML=DL.map(([f,t,d])=>`<div class="card"><h3>${esc(t)}</h3><p>${esc(d)} · data/${esc(f)}</p><div class="btns"><a class="btn" href="data/${esc(f)}" target="_blank" rel="noopener">열기</a><button class="btn" data-f="${esc(f)}">복사</button></div></div>`).join('');
+$('#dl').addEventListener('click',async e=>{const b=e.target.closest('button[data-f]');if(!b)return;try{await navigator.clipboard.writeText((await get('data/'+b.dataset.f)).replace(/^﻿/,''));$('#copymsg').textContent=`${b.dataset.f} 내용을 복사했습니다.`}catch(err){$('#copymsg').textContent='복사하지 못했습니다. ‘열기’로 파일을 열어 주세요.'}});
+}
+</script>
+</body>
+</html>
